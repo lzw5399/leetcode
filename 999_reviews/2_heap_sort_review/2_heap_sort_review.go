@@ -1,27 +1,21 @@
-/**
- * @Author: lzw5399
- * @Date: 2021/6/6 20:35
- * @Desc: 升序排列
- */
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	nums := []int{2, 8, 5, 3, 9, 1}
+	nums := []int{7, 5, 1, 8, 9, 31, 12}
 	heapSort(nums)
 	fmt.Println(nums)
 }
 
-// 1. 建立最大堆
-//   1.1
-// 2. 将堆顶移到最后，并缩小堆的大小，并重新上浮
 func heapSort(nums []int) {
 	endIndex := len(nums) - 1
 	for i := endIndex / 2; i >= 0; i-- {
 		buildMaxHeap(i, endIndex, nums)
 	}
-	fmt.Println("最大堆构建完毕", nums)
+	fmt.Println("最大堆构建完成", nums)
 
 	for i := endIndex; i >= 0; i-- {
 		nums[0], nums[i] = nums[i], nums[0]
@@ -29,19 +23,16 @@ func heapSort(nums []int) {
 	}
 }
 
-func buildMaxHeap(currentRootIndex int, endIndex int, nums []int) {
-	leftChildIndex, rightChildIndex, largestIndex := currentRootIndex*2+1, currentRootIndex*2+2, currentRootIndex
-
-	if leftChildIndex <= endIndex && nums[leftChildIndex] > nums[largestIndex] {
-		largestIndex = leftChildIndex
+func buildMaxHeap(currentRoot int, endIndex int, nums []int) {
+	leftChild, rightChild, largest := currentRoot*2+1, currentRoot*2+2, currentRoot
+	if leftChild <= endIndex && nums[leftChild] > nums[largest] {
+		largest = leftChild
 	}
-
-	if rightChildIndex <= endIndex && nums[rightChildIndex] > nums[largestIndex] {
-		largestIndex = rightChildIndex
+	if rightChild <= endIndex && nums[rightChild] > nums[largest] {
+		largest = rightChild
 	}
-
-	if largestIndex != currentRootIndex {
-		nums[currentRootIndex], nums[largestIndex] = nums[largestIndex], nums[currentRootIndex]
-		buildMaxHeap(largestIndex, endIndex, nums)
+	if largest != currentRoot {
+		nums[largest], nums[currentRoot] = nums[currentRoot], nums[largest]
+		buildMaxHeap(largest, endIndex, nums)
 	}
 }
