@@ -14,7 +14,7 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{8, 2, 4, 6, 1, 9, 3}
+	nums := []int{2, 8, 5, 3, 9, 1}
 	HeapSort2(nums)
 
 	fmt.Println("排序完之后", nums)
