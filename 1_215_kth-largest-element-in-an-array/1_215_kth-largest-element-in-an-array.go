@@ -9,29 +9,34 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{1, 22, 53, 7, 6, 11, 13}
-	r := findKthLargest(nums, 3)
+	nums := []int{1, 7, 6, 4, 5, 3, 2}
+	r := findKthLargest(nums, 7)
 	fmt.Println(r)
 
 	fmt.Println(nums)
 }
 
 func findKthLargest(nums []int, k int) int {
+	// 边界值处理
+	if k <= 0 || k > len(nums) {
+		return -1
+	}
+
 	endIndex := len(nums) - 1
 	// 从最后一个分支节点开始构建最小堆
-	for i:=endIndex / 2; i>=0; i-- {
+	for i := endIndex / 2; i >= 0; i-- {
 		buildMaxHeap(i, endIndex, nums)
 	}
 	fmt.Println("最小堆构建完成", nums)
 
 	// 移动k次堆顶到数组末尾
-	for i:= endIndex; i>=k ; i-- {
+	for i := endIndex; i >= endIndex-k+1; i-- {
 		nums[i], nums[0] = nums[0], nums[i]
 		buildMaxHeap(0, i-1, nums)
 	}
 
 	// 返回倒着数第k个数
-	return nums[len(nums) - k]
+	return nums[len(nums)-k]
 }
 
 // 构建最小堆
@@ -48,4 +53,3 @@ func buildMaxHeap(currentRoot int, endIndex int, nums []int) {
 		buildMaxHeap(largest, endIndex, nums)
 	}
 }
-
