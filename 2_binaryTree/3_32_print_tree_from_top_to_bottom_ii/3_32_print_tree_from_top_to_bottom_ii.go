@@ -34,7 +34,6 @@ func levelOrder(root *TreeNode) [][]int {
 			node := queue[0]
 			queue = queue[1:]
 
-			// 偶数层prepend ！！！
 			temp = append(temp, node.Val)
 
 			if node.Left != nil {
