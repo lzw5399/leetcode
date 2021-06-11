@@ -15,6 +15,8 @@ func main() {
 	palindromeNode := NewPalindromeSampleNode()
 	is := isPalindrome(palindromeNode)
 	fmt.Println(is)
+
+	printLinkedList(palindromeNode)
 }
 
 // 整个流程可以分为以下五个步骤：
@@ -30,53 +32,34 @@ func isPalindrome(node *ListNode) bool {
 
 	// 找到前后半的分界节点(快慢指针)
 	fastPtr, slowPtr := node, node
-	nodeCount := 1
-	for fastPtr.Next != nil {
+	for fastPtr.Next != nil && fastPtr.Next.Next != nil {
 		slowPtr = slowPtr.Next
-		if fastPtr.Next != nil {
-			nodeCount++
-			fastPtr = fastPtr.Next
-		}
-		if fastPtr.Next != nil {
-			nodeCount++
-			fastPtr = fastPtr.Next
-		}
+		fastPtr = fastPtr.Next.Next
 	}
 
 	// 2. 反转后半部分链表
-	result := true
-	// 当为偶数时候，slowPtr在后半部分的开头
-	// 奇数的时候，slowPtr在中间，所以要后移
-	if nodeCount%2 == 1 {
-		slowPtr = slowPtr.Next
-	}
-	latterHalf := reverseList(slowPtr, nil)
+	latterHalf := reverseList(slowPtr.Next)
 
 	// 3. 比较前后是否相等
+	result := true
 	firstHalfNode := node
 	latterHalfNode := latterHalf
-	var latterPrevNode *ListNode // latterHalf的前一个节点
 	for result && latterHalfNode != nil {
 		if firstHalfNode.Val != latterHalfNode.Val {
 			result = false
 		}
 		firstHalfNode = firstHalfNode.Next
 		latterHalfNode = latterHalfNode.Next
-
-		if latterHalfNode == nil && firstHalfNode.Next == latterHalfNode {
-			latterPrevNode = firstHalfNode.Next
-		} else if latterHalfNode == nil && firstHalfNode.Next.Next == latterHalfNode {
-			latterPrevNode = firstHalfNode.Next.Next
-		}
 	}
 
 	// 4. 恢复后半链表
-	reverseList(latterHalf, latterPrevNode)
+	slowPtr.Next = reverseList(latterHalf)
 
 	return result
 }
 
-func reverseList(node *ListNode, prev *ListNode) *ListNode {
+func reverseList(node *ListNode) *ListNode {
+	var prev *ListNode
 	current := node
 	for current != nil {
 		next := current.Next
@@ -124,17 +107,29 @@ func NewPalindromeSampleNode() *ListNode {
 		Val:  3,
 		Next: node4,
 	}
-	//node35 := &ListNode{
-	//	Val:  35,
-	//	Next: node3,
-	//}
+	node35 := &ListNode{
+		Val:  3,
+		Next: node3,
+	}
 	node2 := &ListNode{
 		Val:  2,
-		Next: node3,
+		Next: node35,
 	}
 	node1 := &ListNode{
 		Val:  1,
 		Next: node2,
 	}
 	return node1
+}
+
+func printLinkedList(node *ListNode) {
+	fmt.Println("开始print链表值")
+	if node == nil {
+		fmt.Println("链表为空")
+	}
+	tempNode := node
+	for tempNode != nil {
+		fmt.Printf(" %d -", tempNode.Val)
+		tempNode = tempNode.Next
+	}
 }
