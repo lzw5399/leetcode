@@ -9,7 +9,7 @@ package main
 import "fmt"
 
 func main() {
-	result := combinationSum(5, 100)
+	result := combinationSum(2, 18)
 	fmt.Println(result)
 	fmt.Println(len(result))
 }
@@ -36,7 +36,7 @@ func combinationSum(k int, n int) [][]int {
 			return
 		}
 
-		for i := start; i <= 100-(k-len(path))+1; i++ {
+		for i := start; i <= 9-(k-len(path))+1; i++ {
 			path = append(path, i)
 			dfs(i+1, rest-i)
 			path = path[:len(path)-1]
