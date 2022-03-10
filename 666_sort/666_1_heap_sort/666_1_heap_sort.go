@@ -14,14 +14,14 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{2, 8, 5, 3, 9, 1}
+	nums := []int{2, 8, 5, 4, 9, 11}
 	HeapSort2(nums)
 
 	fmt.Println("排序完之后", nums)
 }
 
 func HeapSort2(nums []int) {
-	// 1. 先构建最大堆
+	// 1. 从最后一个root节点【(len(nums)-1)/2】构建最大堆
 	endIndex := len(nums) - 1
 	for i := endIndex / 2; i >= 0; i-- {
 		buildMaxHeap(i, endIndex, nums)
@@ -31,10 +31,8 @@ func HeapSort2(nums []int) {
 
 	// 2. 然后根据堆特性排序
 	for i := endIndex; i >= 0; i-- {
-		if nums[0] > nums[i] {
-			nums[0], nums[i] = nums[i], nums[0]
-			buildMaxHeap(0, i-1, nums) // 重新构建最大堆，并且i减少1
-		}
+		nums[0], nums[i] = nums[i], nums[0]
+		buildMaxHeap(0, i-1, nums) // 重新构建最大堆，并且i减少1
 	}
 }
 

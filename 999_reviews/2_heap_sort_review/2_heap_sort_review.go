@@ -11,28 +11,32 @@ func main() {
 }
 
 func heapSort(nums []int) {
-	endIndex := len(nums) - 1
-	for i := endIndex / 2; i >= 0; i-- {
-		buildMaxHeap(i, endIndex, nums)
+	// 构建大顶堆
+	endIdx := len(nums) - 1
+	for i := endIdx / 2; i >= 0; i-- {
+		buildMaxHeap(i, endIdx, nums)
 	}
-	fmt.Println("最大堆构建完成", nums)
 
-	for i := endIndex; i >= 0; i-- {
+	// 将大顶堆的顶部移动到数组最后，重新构建大顶堆
+	for i := endIdx; i >= 0; i-- {
 		nums[0], nums[i] = nums[i], nums[0]
 		buildMaxHeap(0, i-1, nums)
 	}
 }
 
-func buildMaxHeap(currentRoot int, endIndex int, nums []int) {
-	leftChild, rightChild, largest := currentRoot*2+1, currentRoot*2+2, currentRoot
-	if leftChild <= endIndex && nums[leftChild] > nums[largest] {
-		largest = leftChild
+func buildMaxHeap(currentRootIdx int, endIdx int, nums []int) {
+	leftChildIdx, rightChildIdx, largestIdx := currentRootIdx*2+1, currentRootIdx*2+2, currentRootIdx
+
+	if leftChildIdx <= endIdx && nums[leftChildIdx] > nums[largestIdx] {
+		largestIdx = leftChildIdx
 	}
-	if rightChild <= endIndex && nums[rightChild] > nums[largest] {
-		largest = rightChild
+
+	if rightChildIdx <= endIdx && nums[rightChildIdx] > nums[largestIdx] {
+		largestIdx = rightChildIdx
 	}
-	if largest != currentRoot {
-		nums[largest], nums[currentRoot] = nums[currentRoot], nums[largest]
-		buildMaxHeap(largest, endIndex, nums)
+
+	if largestIdx != currentRootIdx {
+		nums[largestIdx], nums[currentRootIdx] = nums[currentRootIdx], nums[largestIdx]
+		buildMaxHeap(largestIdx, endIdx, nums)
 	}
 }
