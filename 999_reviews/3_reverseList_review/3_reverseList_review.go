@@ -9,14 +9,15 @@ import "fmt"
 
 func main() {
 	linkedNode := NewSampleLinkedList()
-	reversedNode := reverseList(linkedNode)
+	printLinkedList(linkedNode)
 
-	fmt.Println(reversedNode)
+	reversedNode := reverseList(linkedNode)
+	printLinkedList(reversedNode)
 }
 
-func reverseList(node *LinkedNode) *LinkedNode {
+func reverseList(head *LinkedNode) *LinkedNode {
 	var prev *LinkedNode
-	current := node
+	current := head
 	for current != nil {
 		next := current.Next
 		current.Next = prev
@@ -29,6 +30,18 @@ func reverseList(node *LinkedNode) *LinkedNode {
 type LinkedNode struct {
 	Val  int
 	Next *LinkedNode
+}
+
+func printLinkedList(node *LinkedNode) {
+	fmt.Println("\n开始print链表值")
+	if node == nil {
+		fmt.Println("链表为空")
+	}
+	tempNode := node
+	for tempNode != nil {
+		fmt.Printf(" %d -", tempNode.Val)
+		tempNode = tempNode.Next
+	}
 }
 
 func NewSampleLinkedList() *LinkedNode {
@@ -54,4 +67,3 @@ func NewSampleLinkedList() *LinkedNode {
 	}
 	return node1
 }
-

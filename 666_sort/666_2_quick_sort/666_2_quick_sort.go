@@ -44,3 +44,4 @@ func partition(array []int, low int, high int) int {
 	array[low] = pivot
 	return low
 }
+

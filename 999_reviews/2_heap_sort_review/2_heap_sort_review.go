@@ -17,14 +17,14 @@ func heapSort(nums []int) {
 		buildMaxHeap(i, endIdx, nums)
 	}
 
-	// 将大顶堆的顶部移动到数组最后，重新构建大顶堆
+	// 堆顶移到末尾，并重新构建
 	for i := endIdx; i >= 0; i-- {
-		nums[0], nums[i] = nums[i], nums[0]
+		nums[i], nums[0] = nums[0], nums[i]
 		buildMaxHeap(0, i-1, nums)
 	}
 }
 
-func buildMaxHeap(currentRootIdx int, endIdx int, nums []int) {
+func buildMaxHeap(currentRootIdx, endIdx int, nums []int) {
 	leftChildIdx, rightChildIdx, largestIdx := currentRootIdx*2+1, currentRootIdx*2+2, currentRootIdx
 
 	if leftChildIdx <= endIdx && nums[leftChildIdx] > nums[largestIdx] {

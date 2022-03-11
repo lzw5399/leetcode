@@ -57,6 +57,11 @@ type TreeNode struct {
 }
 
 func NewSampleTree() *TreeNode {
+	leftChildRightChild := &TreeNode{
+		Val:   88,
+		Left:  nil,
+		Right: nil,
+	}
 	rightChildLeftChild := &TreeNode{
 		Val:   15,
 		Left:  nil,
@@ -71,7 +76,7 @@ func NewSampleTree() *TreeNode {
 	leftChild := &TreeNode{
 		Val:   9,
 		Left:  nil,
-		Right: nil,
+		Right: leftChildRightChild,
 	}
 
 	rightChild := &TreeNode{
